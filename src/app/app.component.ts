@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd  } from '@angular/router';
 import { TimetableService } from './Feature/time-table/timetable.service';
 
 @Component({
@@ -10,16 +10,22 @@ import { TimetableService } from './Feature/time-table/timetable.service';
 })
 export class AppComponent {
   title = 'BWM-UI';
+  showHeader: boolean = true;
   constructor(private router: Router, private timetableService: TimetableService) {}
 
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.showHeader = event.url !== '/login';
+      }
+    });
+  }
+
   logout(): void {
-    // Clear user data from localStorage
     localStorage.removeItem('user');
 
-    // Clear term data from BehaviorSubject
     this.timetableService.clearSelectedTerm();
 
-    // Navigate to the login page
     this.router.navigate(['/login']);
   }
 }
