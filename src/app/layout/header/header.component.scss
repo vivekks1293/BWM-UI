@@ -23,4 +23,46 @@ header {
       }
     }
   }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
   
+    .logo {
+      height: 40px; /* Adjust size as needed */
+      width: auto;
+    }
+  
+    .navbar-brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #343a40;
+      text-decoration: none;
+    }
+  
+    .fancy-font {
+      font-family: 'Pacifico', cursive; /* Use a fancy font */
+      color: #343a40;
+    }
+  
+    .btn-outline-danger {
+      border-color: #dc3545;
+      color: #dc3545;
+  
+      &:hover {
+        background-color: #dc3545;
+        color: #fff;
+      }
+    }
+  }
+  .logo {
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #000;
+}
+    
