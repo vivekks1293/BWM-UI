@@ -1,0 +1,69 @@
+<div class="container mt-4">
+    <h2>Timetables for {{ termName }}</h2>
+  
+    <ul class="list-group mb-4">
+      <li
+        *ngFor="let timetable of timetables"
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        {{ timetable.time_table_Name }}
+        <div>
+            <button class="btn btn-outline-primary btn-sm me-2" (click)="viewTimetable(timetable.time_table_id)">
+                View Timetable
+              </button>
+          <!-- Switch to select timetable -->
+          <label class="switch">
+            <input
+              type="checkbox"
+              [checked]="timetable.isChecked"
+              (change)="selectTimetable(timetable.time_table_id)"
+              name = "{{timetable.time_table_id}}"
+            />
+            <span class="slider"></span>
+          </label>
+          <button class="btn btn-outline-secondary btn-sm ms-2" (click)="openPopup(timetable)">Edit</button>
+        </div>
+      </li>
+    </ul>
+  
+    <!-- Fixed position buttons -->
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-secondary me-2" (click)="goBack()">Back</button>
+      <button class="btn btn-primary" (click)="openPopup()">Add New Timetable</button>
+    </div>
+  
+    <!-- Popup Modal -->
+    <div class="modal" tabindex="-1" [class.show]="showPopup" [ngStyle]="{ display: showPopup ? 'block' : 'none' }">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ editingTimetable ? 'Edit Timetable' : 'Add New Timetable' }}</h5>
+            <button type="button" class="btn-close" (click)="closePopup()"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="timetableName" class="form-label">Timetable Name</label>
+                <input type="text" id="timetableName" class="form-control" [(ngModel)]="newTimetable.time_table_Name" name="timetableName">
+              </div>
+              <div class="mb-3">
+                <label for="noOfDays" class="form-label">Number of Days per Week</label>
+                <input type="number" id="noOfDays" class="form-control" [(ngModel)]="newTimetable.no_of_day_per_week" name="noOfDays">
+              </div>
+              <div class="mb-3">
+                <label for="noOfClasses" class="form-label">Number of Classes per Day</label>
+                <input type="number" id="noOfClasses" class="form-control" [(ngModel)]="newTimetable.no_of_class_per_day" name="noOfClasses">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closePopup()">Cancel</button>
+            <button class="btn btn-primary" (click)="editingTimetable ? updateTimetable() : addTimetable()">
+              {{ editingTimetable ? 'Update Timetable' : 'Add Timetable' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

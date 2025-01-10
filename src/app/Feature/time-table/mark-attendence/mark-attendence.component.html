@@ -1,0 +1,54 @@
+<div class="container mt-4">
+    <h2>Mark Attendance</h2>
+    <p><strong>Term ID:</strong> {{ termId }}</p>
+  
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of attendanceRecords">
+          <td>{{ record.formattedDate }}</td>
+          <td>
+            <button class="btn btn-sm btn-primary me-2" (click)="openPopup(record)">Edit</button>
+            <button class="btn btn-sm btn-danger me-2" (click)="deleteAttendance(record.AttendenceId)">Delete</button>
+            <button class="btn btn-sm btn-success" (click)="markAttendance(record)">Mark Attendance</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-secondary me-2" (click)="goBack()">Back</button>
+      <button class="btn btn-primary" (click)="openPopup()">Add New</button>
+    </div>
+  
+    <!-- Popup Modal -->
+    <div class="modal" tabindex="-1" [class.show]="showPopup" [ngStyle]="{ display: showPopup ? 'block' : 'none' }">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{ editingRecord ? 'Edit' : 'Add New' }} Attendance</h5>
+            <button type="button" class="btn-close" (click)="closePopup()"></button>
+          </div>
+          <div class="modal-body">
+            <label for="datePicker" class="form-label">Select Date</label>
+            <input
+              id="datePicker"
+              type="date"
+              class="form-control"
+              (change)="onDateChange($event)"
+              [(ngModel)]="selectedDateToFormat"
+            />
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closePopup()">Close</button>
+            <button class="btn btn-primary" (click)="submitAttendance()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

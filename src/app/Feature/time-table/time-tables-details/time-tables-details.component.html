@@ -1,0 +1,67 @@
+<div class="container mt-4">
+  <h2>Timetable Details</h2>
+  <div *ngIf="timetableDetails; else loading">
+    <p><strong>Timetable Name:</strong> {{ timetableDetails.time_table_Name }}</p>
+    <p><strong>Number of Days per Week:</strong> {{ timetableDetails.no_of_day_per_week }}</p>
+    <p><strong>Number of Classes per Day:</strong> {{ timetableDetails.no_of_class_per_day }}</p>
+
+    <!-- Timetable View -->
+    <div class="timetable-container">
+      <table class="table table-bordered timetable">
+        <thead>
+          <tr>
+            <th class="sticky-col">Day</th>
+            <th *ngFor="let col of columns" class="text-center">Class {{ col }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let day of timetableGrid; let dayIndex = index">
+            <td class="sticky-col">{{ days[dayIndex] }}</td>
+            <td *ngFor="let cell of day; let colIndex = index" (click)="openPopup(dayIndex, colIndex)"
+              class="clickable-cell">
+              {{ cell.SubjectName }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <ng-template #loading>
+    <p>Loading timetable details...</p>
+  </ng-template>
+
+  <!-- Popup Modal -->
+  <div class="modal" tabindex="-1" [class.show]="showPopup" [ngStyle]="{ display: showPopup ? 'block' : 'none' }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Timetable Cell</h5>
+          <button type="button" class="btn-close" (click)="closePopup()"></button>
+        </div>
+        <div class="modal-body">
+          <p *ngIf="selectedDay !== null">Day: {{ days[selectedDay] }}</p>
+          <p *ngIf="selectedClass !== null">Class: {{ selectedClass + 1 }}</p>
+          <div class="mb-3">
+            <label for="subjectDropdown" class="form-label">Select Subject</label>
+            <select id="subjectDropdown" class="form-select" [(ngModel)]="selectedSubjectId"
+              (change)="updateSubjectForCell()">
+              <option [value]="null">No Class</option>
+              <option *ngFor="let subject of subjects" [value]="subject.subjectId">
+                {{ subject.subject_Name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closePopup()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary me-2" (click)="goBack()">Back</button>
+    <button class="btn btn-primary" (click)="saveTimetable()">Save Timetable</button>
+  </div>
+</div>

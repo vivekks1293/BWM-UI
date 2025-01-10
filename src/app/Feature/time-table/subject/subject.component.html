@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>Subjects for {{ termName }}</h2>
+
+  <ul class="list-group mb-4">
+    <li
+      *ngFor="let subject of subjects"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ subject.subject_Name }}
+      <button class="btn btn-outline-secondary btn-sm" (click)="openPopup(subject)">Edit</button>
+    </li>
+  </ul>
+
+  <!-- Buttons aligned at the bottom-right -->
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary me-2" (click)="goBack()">Back</button>
+    <button class="btn btn-primary" (click)="openPopup()">Add New Subject</button>
+  </div>
+
+  <!-- Popup Modal -->
+  <div class="modal" tabindex="-1" [class.show]="showPopup" [ngStyle]="{ display: showPopup ? 'block' : 'none' }">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ editingSubject ? 'Edit Subject' : 'Add New Subject' }}</h5>
+          <button type="button" class="btn-close" (click)="closePopup()"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="subjectName" class="form-label">Subject Name</label>
+              <input type="text" id="subjectName" class="form-control" [(ngModel)]="newSubject.subject_Name" name="subjectName">
+            </div>
+            <div class="mb-3">
+              <label for="subjectFaculty" class="form-label">Faculty</label>
+              <input type="text" id="subjectFaculty" class="form-control" [(ngModel)]="newSubject.subject_Faculty" name="subjectFaculty">
+            </div>
+            <div class="mb-3">
+              <label for="subjectDescription" class="form-label">Description</label>
+              <textarea id="subjectDescription" class="form-control" [(ngModel)]="newSubject.subject_Description" name="subjectDescription"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closePopup()">Cancel</button>
+          <button class="btn btn-primary" (click)="editingSubject ? updateSubject() : addSubject()">
+            {{ editingSubject ? 'Update Subject' : 'Add Subject' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
