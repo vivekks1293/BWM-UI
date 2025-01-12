@@ -22,7 +22,7 @@ export class AppComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
 
     this.timetableService.clearSelectedTerm();
 

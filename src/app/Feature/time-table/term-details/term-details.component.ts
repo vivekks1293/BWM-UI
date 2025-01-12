@@ -34,4 +34,7 @@ export class TermDetailsComponent implements OnInit {
   goToCheckAttendance(){
     this.router.navigate(['timetable/checkattendence']);
   }
+  goBack() {
+    this.router.navigate(['timetable']);
+  }
 }

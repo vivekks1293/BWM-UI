@@ -1,12 +1,15 @@
 <div class="container mt-4">
-    <h2>Term Details: {{ termName }}</h2>
-    <p>Term ID: {{ termID }}</p>
-  
-    <ul class="list-group mt-4">
-      <li class="list-group-item list-group-item-action" (click)="goToTimetables()">Timetable</li>
-      <li class="list-group-item list-group-item-action" (click)="goToSubjects()">Subjects</li>
-      <li class="list-group-item list-group-item-action" (click)="goToMarkAttendance()">Mark Attendance</li>
-      <li class="list-group-item list-group-item-action" (click)="goToCheckAttendance()">Attendance</li>
-    </ul>
+  <h2>Term Details: {{ termName }}</h2>
+  <p>Term ID: {{ termID }}</p>
+
+  <ul class="list-group mt-4">
+    <li class="list-group-item list-group-item-action" (click)="goToTimetables()">Timetable</li>
+    <li class="list-group-item list-group-item-action" (click)="goToSubjects()">Subjects</li>
+    <li class="list-group-item list-group-item-action" (click)="goToMarkAttendance()">Mark Attendance</li>
+    <li class="list-group-item list-group-item-action" (click)="goToCheckAttendance()">Attendance</li>
+  </ul>
+  <br/>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary me-2" (click)="goBack()">Back</button>
   </div>
-  
+</div>
