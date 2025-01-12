@@ -24,6 +24,11 @@ export class DateTimetableDetailsComponent {
   showPopup = false;
   comments: string = '';
   isPresent: boolean | null = null;
+  rowComment: string = '';
+  isRowPresent: boolean | null = false;
+  showRowPopup: boolean = false;
+  selectedRowDay: number | null = null;
+
 
   constructor(private router: Router, private route: ActivatedRoute, private timetableService: TimetableService) { }
 
@@ -101,7 +106,7 @@ export class DateTimetableDetailsComponent {
       //     alert('Error saving timetable data!');
       //   }
       // });
-      
+
     }
   }
   goBack() {
@@ -132,5 +137,27 @@ export class DateTimetableDetailsComponent {
   }
   setAttendance(status: boolean): void {
     this.isPresent = status;
+  }
+  setAttendanceRow(status: boolean): void {
+    this.isRowPresent = status;
+  }
+  markToday(dayIndex: number): void {
+    this.selectedRowDay = dayIndex;
+    this.showRowPopup = true;
+  }
+  closePopupRow() {
+    if (this.selectedRowDay !== null) {
+      for (let i = 0; i < this.timetableGrid[this.selectedRowDay].length; ++i) {
+        if (this.timetableGrid[this.selectedRowDay][i].SubjectId != null && this.timetableGrid[this.selectedRowDay][i].SubjectId != undefined) {
+          this.timetableGrid[this.selectedRowDay][i].Comments = this.rowComment;
+          this.timetableGrid[this.selectedRowDay][i].IsPresent = this.isRowPresent;
+        }
+
+      }
+    }
+    this.showRowPopup = false;
+    this.selectedRowDay = null;
+    this.rowComment = '';
+    this.isRowPresent = false;
   }
 }

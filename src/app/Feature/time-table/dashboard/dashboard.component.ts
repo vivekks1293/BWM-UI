@@ -19,7 +19,7 @@ export class DashboardComponent {
   constructor(private timetableService: TimetableService, private router: Router) {}
 
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const user = JSON.parse(sessionStorage.getItem('user') || '{}');
     this.userId = user.id;
 
     this.fetchTerms();

@@ -24,7 +24,7 @@ export class LoginComponent {
       }).subscribe((response: any) => {
           if(response.success == true){
             this.user = response.user;
-            localStorage.setItem('user', JSON.stringify({
+            sessionStorage.setItem('user', JSON.stringify({
               id: this.user.id,
               username: this.user.username,
               first_name: this.user.first_name,

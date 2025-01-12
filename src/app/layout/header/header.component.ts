@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(private router: Router,  private timetableService: TimetableService) {}
 
   ngOnInit(): void {
-    let user = localStorage.getItem('user');
+    let user = sessionStorage.getItem('user');
     if(user != undefined && user != null){
       this.user = JSON.parse(user);
       this.username = this.user.first_name + " " + this.user.last_name
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
 
     this.timetableService.clearSelectedTerm();
 

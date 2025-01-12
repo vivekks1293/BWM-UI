@@ -10,7 +10,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let day of timetableGrid; let dayIndex = index">
-                    <td class="sticky-col">{{ days[dayIndex] }}</td>
+                    <td class="sticky-col" (click)="markToday(dayIndex)">{{ days[dayIndex] }}</td>
                     <td *ngFor="let cell of day; let colIndex = index"
                         [class.clickable-cell]="cell.SubjectName !== 'No Class'"
                         (click)="cell.SubjectName !== 'No Class' ? openPopup(dayIndex, colIndex) : null">
@@ -25,7 +25,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit Timetable Cell</h5>
+                    <h5 class="modal-title">Mark Timetable Cell</h5>
                     <button type="button" class="btn-close" (click)="closePopup()"></button>
                 </div>
                 <div class="modal-body">
@@ -67,7 +67,54 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" (click)="closePopup()">Close</button>
-                    <!-- <button type="button" class="btn btn-primary" (click)="saveChanges()">Save</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1" [class.show]="showRowPopup" [ngStyle]="{ display: showRowPopup ? 'block' : 'none' }">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mark Timetable Row</h5>
+                    <button type="button" class="btn-close" (click)="closePopupRow()"></button>
+                </div>
+                <div class="modal-body">
+                    <p *ngIf="selectedDay !== null">Day: {{ days[selectedDay] }}</p>
+    
+                    <!-- Text field for comments -->
+                    <div class="mb-3">
+                        <label for="comments" class="form-label">Comments</label>
+                        <input
+                            id="comments"
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="rowComment"
+                            placeholder="Add your comments"
+                        />
+                    </div>
+    
+                    <!-- Toggle buttons for Present/Absent -->
+                    <div class="btn-group" role="group" aria-label="Attendance Selection">
+                        <button
+                            type="button"
+                            class="btn"
+                            [ngClass]="{ 'btn-success': isRowPresent === true, 'btn-outline-success': isRowPresent !== true }"
+                            (click)="setAttendanceRow(true)"
+                        >
+                            Present
+                        </button>
+                        <button
+                            type="button"
+                            class="btn"
+                            [ngClass]="{ 'btn-danger': isRowPresent === false, 'btn-outline-danger': isRowPresent !== false }"
+                            (click)="setAttendanceRow(false)"
+                        >
+                            Absent
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="closePopupRow()">Close</button>
                 </div>
             </div>
         </div>
